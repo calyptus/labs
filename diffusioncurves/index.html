@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Diffusion Curves</title>
+<script src="js/Shader.js"></script>
+<script src="js/Transform.js"></script>
+<script src="js/Curve.js"></script>
+<script src="js/Curves.js"></script>
+<script src="js/DiffusionCurves.js"></script>
+<script src="js/DiffusionCurves.Rasterization.js"></script>
+<script src="js/DiffusionCurves.Diffusion.js"></script>
+<script src="js/DiffusionCurves.Blur.js"></script>
+<script src="Demo.js"></script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-7873489-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+<body>
+<h1>Diffusion Curves</h1>
+<div id="demo">
+	<div>
+		Select image:
+		<select id="selector">
+			<option value="xmls/snake/poivron.xml" selected="true">Poivron</option>
+			<option value="xmls/snake/lady_bug.xml">Lady Bug</option>
+			<option value="xmls/draw/behindthecurtain.xml">Behind The Curtain</option>
+			<option value="xmls/draw/drape.xml">Drape</option>
+			<option value="xmls/draw/face.xml">Face</option>
+			<option value="xmls/draw/fille.xml">Fille</option>
+			<option value="xmls/draw/roses_spirales.xml">Roses Spirales</option>
+			<option value="xmls/draw/zephyr.xml">Zephyr</option>
+			<option value="xmls/vectorization/astray.xml">Ashtray</option>
+			<option value="xmls/vectorization/blueapple.xml">Blue Apple</option>
+			<option value="xmls/vectorization/dolphin.xml">Dolphin</option>
+			<option value="xmls/vectorization/fish.xml">Fish</option>
+			<option value="xmls/vectorization/flower.xml">Flower</option>
+			<option value="xmls/vectorization/fruits.xml">Fruits</option>
+			<option value="xmls/vectorization/glass_droplet_blur.xml">Glass Droplet Blur</option>
+			<option value="xmls/vectorization/gm_cup.xml">Cup</option>
+			<option value="xmls/vectorization/gm_flower.xml">Flower</option>
+			<option value="xmls/vectorization/gm_grapes.xml">Grapes</option>
+			<option value="xmls/vectorization/pink_flowers.xml">Pink Flowers</option>
+			<option value="xmls/vectorization/roses.xml">Roses</option>
+			<option value="xmls/vectorization/tomatos.xml">Tomatos</option>
+			<option value="xmls/test.xml">Test</option>
+		</select>
+	</div>
+	<canvas id="canvas" width="512" height="512"></canvas>
+	<p>Drag the image with your mouse to pan. Use the mouse wheel to zoom.</p>
+	<p>This is a <a href="http://en.wikipedia.org/wiki/Diffusion_curve">Diffusion Curve</a>
+	viewer by <a href="mailto:sebastian@calyptus.eu">Sebastian Markb&aring;ge</a>. It's implemented
+	on the GPU with <a href="http://www.khronos.org/webgl/">WebGL</a> using JavaScript and GLSL.
+	This implementation is inspired by the Laplacian solver proposed by
+	<a href="http://www.cg.tuwien.ac.at/research/publications/2009/jeschke-09-solver/">Stefan Jeschke et al.</a></p>
+	<p>The sample diffusion curve images are from the
+	<a href="http://artis.imag.fr/Publications/2008/OBWBTS08/">original implementation</a> by Orzan et al.
+	The copyright belongs to respective author.</p>
+</div>
+<div id="nowebgl" style="display: none">
+	<h2>WebGL is required.</h2>
+	<p>To enable WebGL download a recent browser and enable the WebGL option.</p>
+	<h3>Chrome (Windows)</h3>
+	<p>Configure your Chrome executable shortcut or run this from the command-line:</p>
+	<p><strong>chrome.exe –enable-webgl</strong></p>
+	<h3>FireFox 4+</h3>
+	<p>On the location bar enter: <strong>about:config</strong></p>
+	<p>Find <strong>webgl.enabled_for_all_sites</strong> using the Filter field and set it to true.</p>
+	<h3>Safari Nightly (OS X 10.6)</h3>
+	<p>From the terminal run:</p>
+	<p><strong>defaults write com.apple.Safari WebKitWebGLEnabled -bool YES</strong></p>
+	<p>Restart the browser.</p>
+</div>
+<p>Copyright &copy; 2010 Calyptus Life AB.</p>
+</body>
+</html>

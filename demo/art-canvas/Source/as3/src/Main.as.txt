@@ -1,0 +1,47 @@
+package 
+{
+	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.text.TextField;
+	import flash.external.ExternalInterface;
+	
+	/**
+	 * ...
+	 * @author Sebastian Markbåge
+	 */
+	public class Main extends Sprite 
+	{
+		private var id : String;
+		private var text : TextField;
+		
+		public function Main():void 
+		{
+			this.id = root.loaderInfo.parameters.id;
+			text = new TextField();
+			addChild(text);
+
+			if (stage) init();
+			else addEventListener(Event.ADDED_TO_STAGE, init);
+		}
+		
+		private function init(e:Event = null):void 
+		{
+			removeEventListener(Event.ADDED_TO_STAGE, init);
+
+			ExternalInterface.marshallExceptions = true;
+			ExternalInterface.addCallback('c', recieve);
+			ExternalInterface.call('ART.Flash.init', this.id);
+			
+			graphics.beginFill(0xFF0000, 0.5);
+			graphics.lineStyle(10, 0x00FF00, 0.5);
+			graphics.drawEllipse(100, 100, 100, 50);
+			graphics.endFill();
+		}
+		
+		private function recieve(commands:String):void
+		{
+			text.text = 'Commands:' + commands;
+		}
+	}
+	
+}

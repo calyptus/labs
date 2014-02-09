@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>JS properties test</title>
+</head>
+<body>
+	<div id="log"></div>
+	<script type="text/vbscript">
+		Dim MyClass_method
+		Dim MyClass_set_name
+		Dim MyClass_get_name
+		
+		Class MyClass
+			Private Sub Class_Initialize
+				Set method = MyClass_method
+			End Sub
+		
+			Public method
+			
+			Public Property Get name
+				name = "Testar"
+				'Name = MyClass_get_name(self)
+			End Property
+			
+			Public Property Let name(value)
+				'MyClass_set_name(self, value)
+			End Property
+			
+			'Public Property Get method
+			'	Set method = MyClass_method
+				'Set method = GetRef("MyClass_method")
+			'End Property
+		End Class
+		
+		Function MyClass_constructor
+			Set MyClass_constructor = new MyClass
+		End Function
+		
+	</script>
+	<script type="text/javascript">
+		var log = document.getElementById('log');
+		if (!window.console) window.console = { log: function(text){
+			log.innerHTML = log.innerHTML + '<br />' + text;
+		} };
+		
+		/*MyClass_set_name = function(){
+			alert('test');
+		};*/
+		function Class(name, klass){
+			for (var prop in klass){
+				window[name + '_' + prop] = /*(/^set_|^get_/).test(prop) ?*/ (function(fn){
+					return function(self){
+						var args = [];
+						for (var i = 1, l = arguments.length; i < l; i++)
+							args[i - 1] = arguments[i];
+						fn.apply(self, args);
+					};
+				})(klass[prop]) /*: klass[prop]*/;
+			}
+			return function(){
+				var obj = window[name + '_constructor']();
+				obj.method = klass.method;
+				return obj;
+			};
+		};
+	</script>
+	<script type="text/javascript">	
+	
+		var MyClass = new Class('MyClass', {
+			method: function(arg){
+				console.log(this == my);
+				//for (var k in this) console.log(k);
+				console.log('Method: ' + arg);
+			},
+			get_name: function(){
+				return new Date();
+			},
+			set_name: function(self, value){
+				console.log('setName: ' + value);
+			}
+		});
+		
+	
+		//console.log(!!MyClass);
+		//var my2 = new MyClass
+		//console.log('bla' + my.MyName);
+		try
+		{
+			//console.log(newClass);
+			console.log('init');
+			var my = new MyClass();
+			console.log('setprop');
+			//my.Name = 'bla';
+			//console.log(typeof(MyClass_method));
+			//console.log(typeof(my.method));
+			console.log(my.name);
+			my.method('test2');
+			//my.method.call(my, 'test');
+			//console.log(fn === MyClass_method);
+			//fn('test');
+			//fn.call(my, 'test');
+			//my.method('foo', 1);
+			//console.log(my.Name);
+			//my2.foo = 'bar';
+			//var kl = function(){ };
+			//kl.prototype = my2;
+
+			//my2.foo = 'bar';
+			//var MyClass2 = function(){ };
+			//MyClass2.prototype = my;
+			//var my2 = new MyClass2();
+			//my2.MyName = 'test2';
+			//for (var k in my2)
+			//	console.log('my.' + k);
+		}
+		catch(e)
+		{
+			console.log(e.description);
+			throw e;
+		}
+
+	</script>
+</body>
+</html>

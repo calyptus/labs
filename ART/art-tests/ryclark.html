@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:av="urn:schemas-microsoft-com:vml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Dynamic VML Test</title>
+    <?import namespace="v" implementation="#default#VML" ?>
+<style>vml { display:inline-block;position:relative;overflow:hidden;width:200px;height:400px; }
+    av\:shape { behavior:url("ryclark.html#default%23VML"); position: absolute; display: inline-block; top: 100px; left: 0; }
+    av\:fill { behavior:url("ryclark.html#default%23VML"); }
+    av\:stroke { behavior:url("ryclark.html#default%23VML"); }
+</style>
+    <script type="text/jscript">
+    
+    function clearVML()
+    {
+        var parent = document.all('VMLDiv');
+        var shape = parent.childNodes[0];
+        if (shape) parent.removeChild(shape);     
+    }
+    
+    function addVML()
+    {
+        var parent = document.createElement('vml');
+        document.all('VMLDiv').appendChild(parent);
+        if (!parent.childNodes[0]) {
+            var shape = document.createElement("av:shape");
+            parent.appendChild(shape);
+
+            var path = "m147,73 l33,73,12,231,147,231,147,73 e"
+            var p = 800;
+            var q = 500;
+
+            shape.style.width = p + 'px';
+            shape.style.height = q + 'px'; // set the shape's shape properties
+            shape.coordsize = p + " " + q;
+            shape.path = path;
+            shape.id = "dynamicVML";
+
+            var stroke = document.createElement("av:stroke");
+            stroke.opacity = 0.3; //'50%';
+            stroke.color = "blue";
+            stroke.weight = "3pt";
+
+            var fill = document.createElement("av:fill");
+            fill.color = "green";
+            fill.opacity = '0.3';
+
+            shape.appendChild(stroke);
+            shape.appendChild(fill);
+        }
+    }
+    
+    </script>
+</head>
+
+<body>
+    <div>
+        <button id="clearVMLButton" onclick="clearVML();" >Clear Static VML</button>
+    </div>
+    <div>
+        <button id="appendVMLButton" value="Append VML Shape" onclick="addVML();" >Append Dynamic VML</button>
+    </div>
+    <div id="VMLDiv">
+    </div>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+<head> 
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+ 
+	<title>untitled</title> 
+	<script type="text/javascript" src="http://labs.calyptus.eu/Truncate/js/mt_122_c.js"></script> 
+	<style type="text/css"> 
+	
+	body {
+		margin:  0;
+		padding:  0;
+	}
+	
+	#container {
+		width: 800px;
+		border: 1px solid #999;
+		margin: 20px auto;
+		padding: 40px;
+	}
+	
+	#debug {
+		width: 800px;
+		border: 1px solid #999;
+		margin: 20px auto;
+		padding:  40px;
+	}
+	
+	#content {
+		font: 16px times;
+		font-weight: normal; 
+		font-style: italic;
+		font-variant: small-caps; 
+		letter-spacing:  2px;
+		text-decoration: none;
+/*		text-indent :  100px; */
+		left: 50px;
+		top: 100px;
+		border: 1px solid #999;
+		padding: 8px;
+	}
+	
+	.try {
+		background-color: #F33;
+	}
+	</style> 
+	
+	<script type="text/javascript"> 
+ 
+Element.implement({
+	
+	measure : function(len){
+		
+		var w = this.getSize().x;
+		var txt = this.get('text');
+		
+		var cSize = Math.ceil(w / txt.length);
+		
+		var keep = Math.ceil(len / cSize) - 3;
+		this.set('text', txt.slice(0,keep) + '...');
+		return this.getSize().x;
+		
+	},
+	
+	/**
+	truncates elements text based on pixel length. handles font styling, size padding and margin issues.
+		len (int) pixel value for the max width of the the element text content
+		end (bool) defaults false. True = cuts string at end, False = cuts string in middle
+		str (string) truncation string default : '...'
+	**/
+	truncate : function(len,end,str){
+		var str = str || '...';
+		var end = !!end;
+		var el = this.clone();
+		var fw = (this.getStyle('font-weight') <= 400) ? 'normal' : 'bold'; // quick hack
+		el.setStyles($merge(this.getStyles( // out for now text-align, text-indent, text-decoration, line-height
+			'display', 'padding', 'margin','border-left','border-right','border-top','border-bottom',
+			'text-align','text-transform', 'word-spacing','word-spacing','letter-spacing',
+			'font-family','font-size','font-style','font-weight','font-variant'),
+			{'position' : 'absolute', 'top' : -5000, 'left' : -1000, 'font-weight' : fw })).inject(document.body);
+			
+	    var txt = this.get('text');
+	
+		if(end){
+			var rside = txt.length;
+			while(this.getSize().x > len){
+				rside--;
+				this.set('text',txt.slice(0,rside)+str);
+			}
+		} else {
+			var mid = lside = Math.floor(txt.length / 2); var rside = lside+1;
+			while(this.getSize().x > len){
+				((mid-lside) < (rside-mid)) ? lside-- : rside++;
+				this.set('text',txt.slice(0,lside)+str+txt.slice(rside));
+			}
+		}
+		this.set('text',el.get('text'));
+		el.destroy();
+		return this;
+	}
+});
+ 
+var Test = new Class({
+	
+	fonts : ['Verdana','Arial','Times','Courier New','Comic Sans MS', 'Georgia','Impact','Symbol'],
+	sizes : [12,14,16,18],
+	weights : ['normal','bold'],
+	styles : ['normal','italic'],
+	variants : ['none','small-caps'],
+	
+	count : 0,
+	total : 0,
+	
+	initialize : function(container,len){
+		this.len = this.min = this.max =  len;
+		this.container = $(container);
+ 
+		this.fonts.each(function(font){
+			this.sizes.each(function(size){
+				this.weights.each(function(weight){
+					this.styles.each(function(style){
+						this.variants.each(function(variant){
+						this.count++
+							new Element('div',{
+								'html' : font + ' ' + size + ' ' + weight + ' ' + style + ' ' + variant,
+ 								'styles' : {
+									'background-color' : '#DDD',
+									'border' : '1px solid #666',
+									'margin' : '20px 4px',
+									'padding' : '5px 5px 5px 5px'
+								}
+							}).inject(this.container);
+							
+							var width = new Element('span',{
+								'html' : 'Some text to put in here so I can test truncation, this should be enough',
+								'styles' : {
+									'font-family' : font,
+									'font-size' : size,
+									'font-weight' : weight,
+									'font-style' : style,
+									'font-variant' : variant,
+									'border' : '1px solid #999',
+									'padding' : '8px 8px 8px 8px'
+								}
+							}).inject(this.container).measure(this.len);
+							
+							if(width < this.min) this.min = width;
+							if(width > this.max) this.max = width;
+							this.total += width;
+							
+						},this);
+					},this);
+				},this);
+			},this);
+		},this);
+		console.debug(this.count,this.min,this.max,(this.total/this.count));
+	}
+});
+ 
+	window.addEvent('domready',function(){
+ 
+		new Test('container',400);
+//		var el = $('content');
+//		console.debug(el.getSize().x);
+	//	el.truncate(300,false);
+	//	el.measure();
+	});
+	
+	</script> 
+</head> 
+ 
+<body> 
+ 
+<div id="container"> 
+<!--	<span id="content">Some text to put in here so I can test truncation, this should be enough</span> --> 
+</div> 
+<div id="debug"> 
+	Some text to put in here so I can test truncation, this should be enough
+	Some text to put in here so I can ... //383
+	Some text to put in here so I can t... // 392
+	
+</div> 
+ 
+</body> 
+</html> 

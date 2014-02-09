@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Page Curl</title>
+<script src="js/Shader.js"></script>
+<script src="js/Transform.js"></script>
+<script src="js/PageCurl.js"></script>
+<script src="Demo.js"></script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-7873489-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+<body style="background: url('images/bg.png')">
+<h1>Page Curl</h1>
+<div id="demo">
+	<div>
+		Select image:
+		<select id="selector">
+			<option value="images/Hydrangeas.jpg" selected="true">Hydrangeas</option>
+			<option value="images/Tulips.jpg">Tulips</option>
+			<option value="images/Koala.jpg">Koala</option>
+		</select>
+	</div>
+	<canvas id="canvas" width="512" height="512"></canvas>
+	<p>Move the mouse over the image to curl the page.</p>
+</div>
+<div id="nowebgl" style="display: none">
+	<h2>WebGL is required.</h2>
+	<p>To enable WebGL download a recent browser and enable the WebGL option.</p>
+	<h3>Chrome (Windows)</h3>
+	<p>Configure your Chrome executable shortcut or run this from the command-line:</p>
+	<p><strong>chrome.exe –enable-webgl</strong></p>
+	<h3>FireFox 4+</h3>
+	<p>On the location bar enter: <strong>about:config</strong></p>
+	<p>Find <strong>webgl.enabled_for_all_sites</strong> using the Filter field and set it to true.</p>
+	<h3>Safari Nightly (OS X 10.6)</h3>
+	<p>From the terminal run:</p>
+	<p><strong>defaults write com.apple.Safari WebKitWebGLEnabled -bool YES</strong></p>
+	<p>Restart the browser.</p>
+</div>
+<p>Copyright &copy; 2010 Calyptus Life AB.</p>
+</body>
+</html>

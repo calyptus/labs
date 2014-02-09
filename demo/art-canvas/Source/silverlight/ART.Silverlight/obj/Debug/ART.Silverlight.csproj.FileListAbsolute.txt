@@ -1,0 +1,12 @@
+C:\Data\! Projects\MooTools\art-canvas\Source\silverlight\ART.Silverlight\obj\Debug\ResolveAssemblyReference.cache
+C:\Data\! Projects\MooTools\art-canvas\Source\silverlight\ART.Silverlight\obj\Debug\App.g.i.cs
+C:\Data\! Projects\MooTools\art-canvas\Source\silverlight\ART.Silverlight\obj\Debug\MainPage.g.i.cs
+C:\Data\! Projects\MooTools\art-canvas\Source\silverlight\ART.Silverlight\obj\Debug\ART.Silverlight.g.resources
+C:\Data\! Projects\MooTools\art-canvas\Source\silverlight\ART.Silverlight\obj\Debug\ART.Silverlight.dll
+C:\Data\! Projects\MooTools\art-canvas\Source\silverlight\ART.Silverlight\obj\Debug\ART.Silverlight.pdb
+C:\Data\! Projects\MooTools\art-canvas\Source\silverlight\ART.Silverlight\obj\Debug\XapCacheFile.xml
+C:\Data\! Projects\MooTools\art-canvas\Source\silverlight\ART.Silverlight.dll
+C:\Data\! Projects\MooTools\art-canvas\Source\silverlight\ART.Silverlight.pdb
+C:\Data\! Projects\MooTools\art-canvas\Source\silverlight\AppManifest.xaml
+C:\Data\! Projects\MooTools\art-canvas\Source\silverlight\ART.Silverlight.xap
+C:\Data\! Projects\MooTools\art-canvas\Source\silverlight\ART.SilverlightTestPage.html

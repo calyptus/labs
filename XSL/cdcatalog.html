@@ -1,0 +1,52 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script>
+function loadXMLDoc(fname)
+{
+var xmlDoc;
+// code for IE
+if (window.ActiveXObject)
+  {
+  xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+  }
+// code for Mozilla, Firefox, Opera, etc.
+else if (document.implementation && document.implementation.createDocument)
+  {
+  xmlDoc=document.implementation.createDocument("","",null);
+  }
+else
+  {
+  alert('Your browser cannot handle this script');
+  }
+xmlDoc.async=false;
+xmlDoc.load(fname);
+return(xmlDoc);
+}
+
+function displayResult()
+{
+xml=loadXMLDoc("cdcatalog.xml");
+xsl=loadXMLDoc("cdcatalog.xsl");
+// code for IE
+if (window.ActiveXObject)
+  {
+  ex=xml.transformNode(xsl);
+  document.getElementById("example").innerHTML=ex;
+  }
+// code for Mozilla, Firefox, Opera, etc.
+else if (document.implementation && document.implementation.createDocument)
+  {
+  xsltProcessor=new XSLTProcessor();
+  xsltProcessor.importStylesheet(xsl);
+  resultDocument = xsltProcessor.transformToFragment(xml,document);
+  document.getElementById("example").appendChild(resultDocument);
+  }
+}
+</script>
+</head>
+<body onload="displayResult()">
+<div id="example" />
+</body>
+</html>
+

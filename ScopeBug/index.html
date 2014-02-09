@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title></title>
+    <script type="text/javascript">
+
+				var _frame = document.getElementsByTagName('head')[0].appendChild(document.createElement('iframe'));
+        var _win = _frame.contentWindow;
+        var _doc = _win.document;
+
+        _doc.open();
+        _doc.write('<script type="text/javascript">window.myFunction = function(){ this.foo = "foo"; };<\/script>');
+        _doc.close();
+
+				var fn = _win.myFunction;
+				fn();
+				
+				var fn2 = _win.Function('this.bar = "bar";');
+				fn2();
+				
+        document.title = this.foo + this.bar;
+   
+    </script>
+</head>
+<body>
+</body>
+</html>

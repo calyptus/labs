@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Native drag drop test</title>
+    <style type="text/css">
+		/* *:-khtml-drag {
+			background-color: #00FF00;
+		}*/
+    </style>
+</head>
+<body>
+	<div>
+	Allow: <select id="effectAllowed"><option>uninitialized</option><option>all</option><option>copy</option><option>move</option><option>link</option><option>copyMove</option><option>linkMove</option><option>copyLink</option></select>
+	Effect: <select id="dropEffect"><option>undefined</option><option>none</option><option>copy</option><option>move</option><option>link</option></select>
+	</div>
+	<div style="width: 410px; overflow: hidden;">
+		<a id="link" href="http://www.calyptus.eu/" style="width: 100px; height: 100px; float: left;">Some link</a>
+		<img id="img" src="http://www.calyptus.eu/logo.jpg" style="width: 100px; height: 100px; float: left;" />
+		<div id="box" style="width: 100px; height: 100px; background-color: #FF0000; float: left;"><a id="boxlink" href="http://labs.calyptus.eu/DragDrop/url">link text</a> regular text</div>
+		<textarea id="textarea" style="width: 100px; height: 100px;">Text</textarea>
+	</div>
+	<div id="target" style="width: 400px; height: 100px; background-color: #0000FF"><strong>Drop</strong> here</div>
+	<div id="log"></div>
+	<script type="text/javascript">
+		var log = document.getElementById('log');
+		/*if (!window.console)*/ window.console = { log: function(text){
+			log.innerHTML = log.innerHTML + '<br />' + text;
+		} };
+		
+		window.ondrop = function(){
+			console.log('window:drop');
+		};
+
+		window.onload = function(){
+
+			var allow = 'uninitialized', effect = 'undefined';
+			
+			var effectAllowed = document.getElementById('effectAllowed');
+			effectAllowed.onchange = function(){ allow = this.options[this.selectedIndex].text; };
+			var dropEffect = document.getElementById('dropEffect');
+			dropEffect.onchange = function(){ effect = this.options[this.selectedIndex].text; };
+				
+			var dragImage = new Image();
+			dragImage.src = "http://www.calyptus.se/bg.jpg";
+			dragImage.style.width = '50px';
+			dragImage.style.height = '50px';
+			//var dragImage = document.getElementById('box');
+
+			var url = window.ActiveXObject ? 'URL' : 'text/uri-list',
+				text = window.ActiveXObject ? 'Text' : 'text/plain',
+				arbitrary = window.ActiveXObject ? 'Text' : 'text/html';
+
+			var link = document.getElementById('link');
+
+			link.ondragstart = function(event){
+				event = event || window.event;
+				/*event.dataTransfer.clearData('text/x-moz-url');
+				event.dataTransfer.clearData('text/x-moz-url-data');
+				event.dataTransfer.clearData('text/x-moz-url-desc');
+				event.dataTransfer.clearData('text/html');*/
+				event.dataTransfer.setData(url, 'http://www.calyptus.se/bg.jpg');
+				event.dataTransfer.setData(text, 'This <b>link</b> may be dragged');
+				event.dataTransfer.setData(arbitrary, 'RANDOM DATA');
+				event.dataTransfer.effectAllowed = allow;
+				//event.dataTransfer.setData('application/x-foo', 'bar');
+				//event.dataTransfer.addElement(img);
+				if (event.dataTransfer.setDragImage) event.dataTransfer.setDragImage(dragImage, 0, 0);test
+				console.log('link:dragstart');
+			};
+			link.ondragend = function(event){
+				event = event || window.event;
+				preventDefault(event);
+				console.log('link:dragend\t' + event.dataTransfer.dropEffect + '\t' + event.relatedTarget);
+			};
+
+			var img = document.getElementById('img');
+
+			img.ondragstart = function(event){
+				event = event || window.event;
+				event.dataTransfer.setData(text, 'This img may be dragged');
+				event.dataTransfer.setData(url, 'http://www.calyptus.eu/someimg');
+				event.dataTransfer.effectAllowed = allow;
+				if (event.dataTransfer.setDragImage) event.dataTransfer.setDragImage(dragImage, 0, 0);
+				console.log('img:dragstart');
+			};
+			img.ondragend = function(event){
+				event = event || window.event;
+				preventDefault(event);
+				console.log('img:dragend', event.dataTransfer.dropEffect);
+			};
+
+			var box = document.getElementById('box');
+			
+			if (!window.ActiveXObject && !navigator.taintEnabled && document.evaluate)
+				box.style.khtmlUserDrag = 'element';
+			else if (box.draggable != undefined)
+				box.draggable = true;
+			else if (window.ActiveXObject)
+				box.onmousedown = function(){
+					function move(){
+						box.dragDrop();
+						document.onmouseover = function(){};
+					}
+					document.onmouseover = move;
+				};
+			box.style.khtmlUserSelect = 'none';
+
+			box.ondragstart = function(event){
+				event = event || window.event;
+				//event.dataTransfer.setData(text, 'This box may be dragged');
+				//event.dataTransfer.setData(url, 'http://www.calyptus.eu/someelement');
+				event.dataTransfer.effectAllowed = allow;
+				if (event.dataTransfer.setDragImage) event.dataTransfer.setDragImage(dragImage, 0, 0);
+				console.log('box:dragstart');
+			};
+			box.ondrag = function(event){
+				event = event || window.event;
+				event.dataTransfer.effectAllowed = allow;
+			};
+			box.ondragend = function(event){
+				event = event || window.event;
+				//preventDefault(event);
+				console.log('box:dragend', event.dataTransfer.dropEffect);
+			};
+			
+			var boxlink = document.getElementById('boxlink');
+			
+			boxlink.ondragstart = function(event){
+				console.log('boxlink:dragstart');
+			};
+			
+			
+			var textarea = document.getElementById('textarea');
+
+			textarea.ondragstart = function(event){
+				event = event || window.event;
+				event.dataTransfer.setData(text, 'This text may be dragged');
+				//event.dataTransfer.setData(url, 'http://www.calyptus.eu/text');
+				event.dataTransfer.effectAllowed = allow;
+				//if (event.dataTransfer.setDragImage) event.dataTransfer.setDragImage(dragImage, 0, 0);
+				console.log('textarea:dragstart');
+			};
+			
+			textarea.ondragend = function(event){
+				event = event || window.event;
+				preventDefault(event);
+				console.log('textarea:dragend\t' + event.dataTransfer.dropEffect);
+			};
+			
+			textarea.ondragenter = function(event){
+				event = event || window.event;
+				//event.dataTransfer.effectAllowed = 'move';
+				event.dataTransfer.dropEffect = effect;
+				preventDefault(event);
+				console.log('textarea:dragenter');
+			};
+			
+			textarea.ondragover = function(event){
+				event = event || window.event;
+				//event.dataTransfer.effectAllowed = 'copy';
+				event.dataTransfer.dropEffect = effect;
+				preventDefault(event);
+				//console.log('textarea:dragover');
+			};
+
+			var target = document.getElementById('target');
+			
+			target.ondragenter = function(event){
+				event = event || window.event;
+				//event.dataTransfer.effectAllowed = 'move';
+				if (effect != 'undefined') event.dataTransfer.dropEffect = effect;
+				preventDefault(event);
+				//event.dataTransfer.mozCursor = 'auto';
+				console.log('target:dragenter');
+			};
+			
+			target.ondragover = function(event){
+				event = event || window.event;
+				//event.dataTransfer.effectAllowed = 'copy';
+				if (effect != 'undefined') event.dataTransfer.dropEffect = effect;
+				//event.dataTransfer.mozCursor = 'auto';
+				preventDefault(event);
+				//console.log('target:dragover');
+			};
+			
+			target.ondragleave = function(event){
+				event = event || window.event;
+				console.log('target:dragleave');
+			};
+			
+			
+			/*var org = document.createEventObject;
+			document.createEventObject = function(event){
+				var obj = org(event);
+				obj.foo = 'bar';
+				return obj;
+			};
+			
+			Object.prototype.each = function(fn, bind){
+				for (var k in this) fn.call(bind, this[k], k);
+			};
+			for (var k in Object.prototype)
+				console.log(k);
+			*/
+			var dt;
+			//target.constructor.prototype.test = function(){};
+			target.ondrop = function(event){
+				event = event || window.event;
+				
+				//for (var i = 0, l = event.dataTransfer.types.length; i < l; i++)
+				//	console.log(event.dataTransfer.types[i] + '\t' + event.dataTransfer.getData(event.dataTransfer.types[i]));
+					
+				//event.dataTransfer.mozGetDataAt('application/x-moz-file', 0);			
+				/*var ev = document.createEvent ? document.createEvent("Events") : document.createEventObject();
+				console.log(ev);
+				for (var k in ev)
+					console.log(k);*/
+				
+				//console.log(typeof(document.createEvent));
+				
+				//for (var k in ev)
+				//	console.log(k);
+				//console.log(k.dataTransfer.getData('Text'));
+				//for (var k in ev)
+					//console.log(k + ', ' + ev.hasOwnProperty(k));
+				//ev.srcElement = this;
+				//console.log(target.hasOwnProperty('firstChild'));
+				//var ev = new window.event();
+
+				//ev.foo = 'bar';
+				//for (var k in window) console.log(k);
+				//Event.prototype.test = function(){ console.log('test'); };
+				
+				//event.constructor.prototype = 'bar';
+				var data = event.dataTransfer.getData(url),
+					data2 = event.dataTransfer.getData(text),
+					data3 = event.dataTransfer.getData(arbitrary);
+				//event.dataTransfer.dropEffect = effect;
+				//event.dataTransfer.__proto__.test = function() { alert('test'); };
+				console.log('target:drop\t' + event.dataTransfer.dropEffect + '\t' + url + ': ' + data + '\t' + text + ': ' + data2 + '\t' + arbitrary + ': ' + data3);
+				for (var i = 0, l = event.dataTransfer.types.length; i < l; i++){
+					var type = event.dataTransfer.types[i];
+					console.log(type + ' = ' + event.dataTransfer.getData(type));
+				}
+				//preventDefault(event);
+				return false;
+			};
+
+		};
+		
+		function preventDefault(event){
+			if (event.preventDefault) event.preventDefault(); else event.returnValue = false;
+		}
+
+	</script>
+</body>
+</html>

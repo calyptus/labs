@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Native copy/paste test</title>
+</head>
+<body>
+	<textarea id="textarea" style="width: 400px; height: 100px; background-color: #EEE">Paste here</textarea>
+	<div id="target" style="width: 400px; height: 100px; background-color: #CCCCCC" contentEditable="true">Paste here</div>
+	<div id="log"></div>
+	<script type="text/javascript">
+		var log = document.getElementById('log');
+		if (!window.console) window.console = { log: function(text){
+			log.innerHTML = log.innerHTML + '<br />' + text;
+		} };
+
+		window.onload = function(){
+
+			var textarea = document.getElementById('textarea');
+			
+			textarea.addEventListener('input', function(event){
+				event = event || window.event;
+				
+				console.log('input' + this.value);
+				
+				//for (var k in event)
+				//	console.log(k + '\t' + event[k]);
+				//alert('pause');
+				
+				//preventDefault(event);
+			}, true);
+
+			var target = document.getElementById('target');
+			
+			target.addEventListener('focus', function(event){
+				event = event || window.event;
+				
+				console.log('input');
+				//alert('pause');
+				
+				//preventDefault(event);
+			}, true);
+
+		};
+		
+		function preventDefault(event){
+			if (event.preventDefault) event.preventDefault(); else event.returnValue = false;
+		}
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>WebKit Prototype Cache Bug</title>
+</head>
+
+<body>
+<script type="text/javascript">
+
+var Test = function(){};
+
+var methodCount = 65;
+
+for (var i = 0; i < methodCount; i++){
+	Test.prototype['myMethod' + i] = function(){};
+}
+
+var test1 = new Test();
+
+for (var k in test1);
+
+Test.prototype.myAdditionalMethod = function(){};
+
+var test2 = new Test();
+
+var found = false;
+for (var k in test2){
+	if (k == 'myAdditionalMethod') found = true;
+}
+
+document.write('myAdditionalMethod: ' + found.toString() + " expected true");
+
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+name: "ART.Canvas"
+
+version: "0.9.dev"
+
+description: "Canvas adapter for ART."
+
+license: "[MIT License]"
+
+copyright: "&copy; [Calyptus Life AB](http://calyptus.eu)"
+
+authors: ["[Sebastian Markbåge](http://calyptus.eu)"]
+
+sources:
+  - "Source/ART.Canvas.js"
+  - "Source/ART.Base.js"

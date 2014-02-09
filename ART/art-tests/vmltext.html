@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:v="urn:schemas-microsoft-com:vml"> 
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>VML text</title>
+<?import namespace="v" implementation="#default#VML" ?>
+<style>v\: * {
+    behavior: url("vmltext.html#default%23VML");
+}
+</style>
+<script language="JScript">
+ 
+var pathLine;
+ 
+// Since this function refers to the document.body object,
+// it must be called after the body tag in the HTML document
+// has been processed.  Thus, we call it from the onload event
+// on the body object.
+ 
+function makeTextPath() {
+ 
+	// Create the shape object
+	var myShape = document.createElement("v:shape");
+ 
+	// Add it to the DOM hierarchy
+	document.body.appendChild(myShape);
+ 
+	// Set its dimension and position attributes
+	myShape.style.position = "absolute";
+	myShape.style.top = "25px";
+	myShape.style.left = "5px";
+	myShape.style.width = "300px";
+	myShape.style.height = "300px";
+	myShape.style.antialias = "true";
+	
+	// Define its coordinate space
+	myShape.coordsize.x = 300;
+	myShape.coordsize.y = 300;
+ 
+	// Add mouse events to show and hide the path line over the text.
+	myShape.onmouseover = new Function("pathLine.style.visibility='visible';");
+	myShape.onmouseout = new Function("pathLine.style.visibility='hidden';");
+ 
+	// Create the fill object
+	var myFill = document.createElement("v:fill");
+	myFill.on = "true";
+	myFill.color = "#cccccc";
+ 
+	// Add it to the DOM hierarchy
+	myShape.appendChild(myFill);
+ 
+	// Create the stroke object
+	var myStroke = document.createElement("v:stroke");
+	myStroke.on = "false";
+ 
+	// Add it to the DOM hierarchy
+	myShape.appendChild(myStroke);
+ 
+	// Create the path object
+	var myPath = document.createElement("v:path");
+	myPath.textpathok = "True";
+	myPath.v = "m 0,0 qx 100,100 qy 200,200 qx 300,200"
+ 
+	// Add it to the DOM hierarchy
+	myShape.appendChild(myPath);
+ 
+	// Create the textpath object
+	var myTextPath = document.createElement("v:textpath");
+	myTextPath.on = "true";
+	myTextPath.fitpath = "true";
+	myTextPath.string = "Where do you want to go today?";
+	myTextPath.style.font = "normal normal bold 12pt Arial";
+ 
+	// Add it to the DOM hierarchy
+	myShape.appendChild(myTextPath);
+ 
+	//
+	// Now we make the red line overlay that shows
+	// where the path is.
+	//
+ 
+	// Create the shape object
+	pathLine = document.createElement("v:shape");
+ 
+	// Add it to the DOM hierarchy
+	document.body.appendChild(pathLine);
+ 
+	// Set its dimension and position attributes
+	pathLine.style.position = "absolute";
+	pathLine.style.top = "25px";
+	pathLine.style.left = "5px";
+	pathLine.style.width = "300px";
+	pathLine.style.height = "300px";
+	pathLine.style.antialias = "true";
+	// Make the path line invisible until the user touches the text
+	pathLine.style.visibility = "hidden";
+	
+	// Define its coordinate space
+	pathLine.coordsize.x = 300;
+	pathLine.coordsize.y = 300;
+ 
+	var pathFill = document.createElement("v:fill");
+	pathFill.on = "false";
+	pathLine.appendChild(pathFill);
+	var pathStroke = document.createElement("v:stroke");
+	pathStroke.on = "true";
+	pathStroke.color = "#ff3333";
+	pathStroke.weight = "1px";
+	pathLine.appendChild(pathStroke);
+	var pathPath = document.createElement("v:path");
+	pathPath.v = "m 0,0 qx 100,100 qy 200,200 qx 300,200";
+	pathLine.appendChild(pathPath);
+	alert(myShape.outerHTML);
+}
+</script>
+<style type="text/css" media="print"> 
+#gradientBand {
+    DISPLAY: none;
+}
+</style>
+</head>
+ 
+<body bgcolor="#FFFFFF" onload="makeTextPath()">
+ 
+<br>
+<p style="padding-top:225px"><a href="http://www.microsoft.com/info/cpyright.mspx">ms</p>
+ 
+</body>
+ 
+</html>
+

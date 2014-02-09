@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bindings xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://www.mozilla.org/xbl" xmlns:xbl="http://www.mozilla.org/xbl" xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <binding id="e">
+     <content>
+        <xul:description crop="end" style="-moz-user-select: text; display: inline;" value="pretext" /><html:em><xul:description crop="end" style="-moz-user-select: text; display: inline;" value="more text" /></html:em><xul:description crop="end" style="-moz-user-select: text; display: inline;" value="Cats and dogs adfg sdfg sdfgsdfg sdfgsdfg" />
+        <html:br />
+        <xul:label crop="end" style="-moz-user-select: text;">blabablabg df sfdsdfg sg</xul:label>
+        <html:br />test<children />
+        <!-- <xul:window>
+           <xul:label xul:crop="end" style="width: 100px; height: 50px" xbl:inherits="value=xbl:text"><children /></xul:label>
+        </xul:window> -->
+     </content>
+     <implementation>
+				<constructor>
+					console.log(this.childNodes.length);
+				</constructor>
+     </implementation>
+  </binding>
+</bindings>
