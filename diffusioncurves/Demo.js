@@ -9,6 +9,7 @@ function DiffusionCurveRenderer(canvas){
 	var gl;
     //try {
     gl = canvas.getContext('experimental-webgl', { antialias: false });
+    if (!gl) gl = canvas.getContext('webgl', { antialias: false });
     //} catch(x){ }
     if (!gl) throw new Error('No WebGL');
     

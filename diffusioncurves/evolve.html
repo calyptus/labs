@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Genetic Diffusion Curves - EvoLisa Revisited</title>
+<script src="js/Shader.js"></script>
+<script src="js/Curve.js"></script>
+<script src="js/Curves.js"></script>
+<script src="js/DiffusionCurves.js"></script>
+<script src="js/DiffusionCurves.Rasterization.js"></script>
+<script src="js/DiffusionCurves.Diffusion.js"></script>
+<script src="js/DiffusionCurves.Blur.js"></script>
+<script src="js/evolution/DiffusionCurves.Difference.js"></script>
+<script src="js/evolution/Mutator.js"></script>
+<script src="js/evolution/Curve.js"></script>
+<script src="js/evolution/Curves.js"></script>
+<script src="Evolve.js"></script>
+</head>
+<body>
+<h1>Genetic Diffusion Curves - EvoLisa Revisited</h1>
+<div id="demo">
+	<img id="original" />
+	<canvas id="canvas" width="512" height="512"></canvas>
+</div>
+<div id="nowebgl" style="display: none">
+	<h2>WebGL is required.</h2>
+	<p>To enable WebGL download a recent browser and enable the WebGL option.</p>
+	<h3>Chrome (Windows)</h3>
+	<p>Configure your Chrome executable shortcut or run this from the command-line:</p>
+	<p><strong>chrome.exe –enable-webgl</strong></p>
+	<h3>FireFox 4+</h3>
+	<p>On the location bar enter: <strong>about:config</strong></p>
+	<p>Find <strong>webgl.enabled_for_all_sites</strong> using the Filter field and set it to true.</p>
+	<h3>Safari 5 (OS X 10.6)</h3>
+	<p>From the terminal run:</p>
+	<p><strong>defaults write com.apple.Safari WebKitWebGLEnabled -bool YES</strong></p>
+	<p>Restart the browser.</p>
+</div>
+<p>Copyright &copy; 2010 Calyptus Life AB.</p>
+</body>
+</html>
