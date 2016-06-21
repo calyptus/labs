@@ -26,7 +26,7 @@ function PageCurlRenderer(canvas){
 		img = new Image();
 		img.onload = requestRender;
 		img.src = url;
-		//if (img.width) requestRender();
+		if (img.width) requestRender();
 	};
 	
 	function render(){
